@@ -26,7 +26,7 @@ while run:
 
     key=pygame.key.get_pressed()
 
-    if rect1.right>=w or rect1.left<=0 :
+    if rect1.right>=w or rect1.left<=0:
         speed=-speed
     if rect1.top<=0 or rect1.bottom>=w:
         speed2=-speed2
