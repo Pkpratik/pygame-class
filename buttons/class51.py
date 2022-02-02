@@ -37,7 +37,7 @@ while run:
         forward_speed=-forward_speed
     if rect1.top<=0 or rect1.bottom>=h:
         downward_speed=-downward_speed
-    if rect1.colliderect(bar1):
+    if rect1.colliderect(bar1) and downward_speed>0:
         downward_speed*=-1
     #Pongbar
     if key[pygame.K_RIGHT]==1 and bar1.right<w:
