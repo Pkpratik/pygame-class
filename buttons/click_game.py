@@ -65,6 +65,7 @@ while True:
     rects.draw(screen)
     m-=1
 
+
     rects.update()
     mousep.update()
     pygame.display.update()
