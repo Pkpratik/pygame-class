@@ -12,16 +12,15 @@ def msg (screen,text,color=(55,55,55),size=36,pos=(-1,-1)):
     textpos.centerx = pos[0]
     textpos.centery= pos[1]
     screen.blit(text, textpos)
-def load_sound(name):
-    if not pygame.mixer or not pygame.mixer.get_init():
-        pass
-    try:
-        sound = pygame.mixer.Sound(name)
-    except pygame.error:
-        print ('Cannot load sound: %s' % name)
-        raise SystemExit(str(geterror()))
-    return sound
-
+# def load_sound(name):
+#     if not pygame.mixer or not pygame.mixer.get_init():
+#         pass
+#     try:
+#         sound = pygame.mixer.Sound(name)
+#     except pygame.error:
+#         print ('Cannot load sound: %s' % name)
+#         raise SystemExit(str(geterror()))
+#     return sound
 
 class button():
     x=0

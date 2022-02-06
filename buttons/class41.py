@@ -61,6 +61,7 @@ while run:
                     isclicked=False
                     action=True
                     count+=1
+                    
                     print(count)
                     pygame.draw.rect(screen,(0,0,100),
                     rect1)

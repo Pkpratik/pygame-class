@@ -17,6 +17,7 @@ a,b,c=150,150,150
 while run:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
+            
             run=False
     screen.fill(bg)
     pos=pygame.mouse.get_pos()

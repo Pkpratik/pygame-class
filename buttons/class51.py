@@ -20,6 +20,7 @@ while run:
     pygame.time.delay(10)
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
+            
             run=False
     #Makes it stay inside the screen
     #Code is missing, couldnt get it working.

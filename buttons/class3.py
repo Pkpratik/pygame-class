@@ -48,6 +48,7 @@ while run:
             pygame.draw.rect(screen,(a,b,c),rect1)
             
     else:
+        
 
         pygame.draw.rect(screen,(random.randint(0,255),random.randint(0,255),random.randint(0,255)),rect1)
         action=False

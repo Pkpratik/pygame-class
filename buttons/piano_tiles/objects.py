@@ -24,3 +24,4 @@ class Tile(pygame.sprite.Sprite):
             self.kill()
         pygame.draw.rect(self.image,self.color,(0,0,tile_width,tile_height))
         self.screen.blit(self.image,self.rect)
+        
