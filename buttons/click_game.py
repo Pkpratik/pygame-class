@@ -69,4 +69,5 @@ while True:
     mousep.update()
     pygame.display.update()
 
+
     clock.tick(fps)
