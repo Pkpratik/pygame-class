@@ -54,10 +54,11 @@ class ball(pygame.sprite.Sprite):
         self.start=1
     def hit(self):
         self.downward_speed*=-1
+
 class brick(pygame.sprite.Sprite):
     def __init__(self,x,y,s,color):
         super().__init__()
-        self.image=pygame.Surface([100,10])
+        self.image=pygame.Surface([100,25])
         self.image.fill(color)
         self.rect=self.image.get_rect()
         self.rect.x=x
