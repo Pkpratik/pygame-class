@@ -1,98 +1,57 @@
 import pygame
-from random import randint
 from sys import exit
+from random import randint
 
 pygame.init()
-game_active = True #start the game on the Welcome Screen
-clock = pygame.time.Clock() #an object to track time, for fps
 
+clock = pygame.time.Clock()
 
-def display_surface():
-    """function to create the main window"""
-    disp_surface = pygame.display.set_mode(size = (610, 700)) #creates a main display window
-    pygame.display.set_caption("Snake")
-    return disp_surface
-disp_surface = display_surface() #MUST return this immediately so it can be pushed to pygame.display.update()
+screen_width = 1000
+screen_height = 660
+screen = pygame.display.set_mode((screen_width, screen_height))
 
-class snake(pygame.sprite.Sprite):
-    def __init__(self, x_pos = 300, y_pos = 300):
-        #Access the super class of Sprite
-        super().__init__()
-        image1 = pygame.Surface([25,25])
-        self.x_pos = x_pos
-        self.y_pos = y_pos
+# Treasure
+treasure = pygame.Surface([10,10])
+treasure_surf = pygame.transform.scale(treasure, (10, 10))
+treasure_surf.fill((100,200,150))
+treasure_rect = treasure_surf.get_rect(center = (500, 330))
 
-        self.image = image1
-        self.image.fill((255,0,0))
-        self.rect = self.image.get_rect(x = x_pos, y = y_pos)
+# Zombie
+zombie_vel = 1
+zombie = pygame.Surface([100,100])
+zombie_surf = pygame.transform.scale(zombie, (100, 100))
+zombie_surf.fill((200,100,150))
+zombie_rect = zombie_surf.get_rect(center = (randint(0, 1000), randint(0, 600)))
 
-    def update(self, left, right, up, down):
-        """defines the movement of the snake using arrow keys"""
-        if left:
-            self.rect.left -= 1
-        if right:
-            self.rect.right += 1
-        if up:
-            self.rect.top -= 1
-        if down:
-            self.rect.bottom += 1
-
-snakegroup = pygame.sprite.Group()
-original_snake = snake()
-snakegroup.add(original_snake)
-
-class food(pygame.sprite.Sprite):
-    """class to control food action"""
-    def __init__(self):
-        super().__init__() #access the Sprite super class methods
-        food1 = pygame.Surface([25,25])
-        x_pos = randint(50,600)
-        y_pos = randint(50,650)
-        self.image = food1
-        self.image.fill((0,0,255))
-        self.rect = self.image.get_rect(x = x_pos,y = y_pos)
-
-foods = pygame.sprite.GroupSingle()
-foods.add(food())
-
-multiplier_x_pos = 1
 while True:
-    """EVENT LOOP CODE"""
-    for eachevent in pygame.event.get():
-        if eachevent.type == pygame.QUIT:
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
             pygame.quit()
             exit()
 
-        game_active = True
-        if pygame.sprite.spritecollideany(foods.sprite, snakegroup):
-            foods.empty()
-            foods.add(food())
-            foods.draw(disp_surface)
+    if zombie_rect.centerx < 500:
+        zombie_rect.centerx += zombie_vel
 
-            snakegroup.add(snake(original_snake.rect.x-(25*multiplier_x_pos),original_snake.rect.y))
-            multiplier_x_pos += 1
-            snakegroup.update(left, right, up, down)
-            
+    if zombie_rect.centerx > 500:
+        zombie_rect.centerx -= zombie_vel
+
+    if zombie_rect.centery < 330:
+        zombie_rect.centery += zombie_vel
+
+    if zombie_rect.centery > 330:
+        zombie_rect.centery -= zombie_vel
+
+    if zombie_rect.colliderect(treasure_rect):
+        zombie_rect.centerx = randint(0, 1000)
+        zombie_rect.centery = randint(0, 600)
+
+
+    screen.fill('DarkGreen')
+    screen.blit(treasure_surf, treasure_rect)
+    screen.blit(zombie_surf, zombie_rect)
         
-        keys = pygame.key.get_pressed()
-        events = pygame.event.get()
-        
-        left = keys[pygame.K_LEFT]
-        right = keys[pygame.K_RIGHT]
-        up = keys[pygame.K_UP]
-        down = keys[pygame.K_DOWN]
-     
-        snakegroup.update(left,right,up,down)
 
-    """PYGAME EVENT CODE"""
-    if game_active:
-        disp_surface = display_surface()
-
-        snakegroup.draw(disp_surface)
-        foods.draw(disp_surface)
-
-    else:
-        disp_surface.fill((64,64,64))
-
-    pygame.display.update() #update all the surfaces on each frame
-    clock.tick(120)
+    pygame.display.update()
+    clock.tick(60)

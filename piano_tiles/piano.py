@@ -36,7 +36,7 @@ while run:
         tile_group.draw(screen)
         score+=1
     if scrolling%200==0:
-        speed+=1   
+        speed+=1
 
     scrolling+=speed
 

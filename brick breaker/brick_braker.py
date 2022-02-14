@@ -39,8 +39,11 @@ class ball(pygame.sprite.Sprite):
             if self.rect.top<=0 or self.rect.bottom>=h:
                 self.downward_speed=-self.downward_speed
             if self.rect.colliderect(bar1):
-                if self.rect.centerx>= bar1.x and self.rect.centerx<= bar1.x+25:
+                if self.rect.centerx>= bar1.x and self.rect.centerx<= bar1.x+bar1.width//3:
                     if self.forward_speed>0:
+                        self.forward_speed*=-1
+                elif self.rect.centerx>=bar1.x+bar1.width*(2//3) and self.rect.centerx<=bar1.x+bar1.width:
+                    if self.forward_speed<0:
                         self.forward_speed*=-1
                 if self.downward_speed<0:
                     self.downward_speed*=-1
