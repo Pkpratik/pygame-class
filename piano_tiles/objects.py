@@ -26,4 +26,15 @@ class Tile(pygame.sprite.Sprite):
             self.color=(0,0,0,90)
         pygame.draw.rect(self.image,self.color,(0,0,tile_width,tile_height))
         self.screen.blit(self.image,self.rect)
+class mousep(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([10,10],pygame.SRCALPHA)
+        self.image.fill((0,0,0,0))
+        self.rect = self.image.get_rect()
+        self.rect.center=pygame.mouse.get_pos()
         
+    def update(self):
+        self.rect.center=pygame.mouse.get_pos()
+        pygame.draw.rect(self.image,(0,0,0,0),self.rect)
+    
