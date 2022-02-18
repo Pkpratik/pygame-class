@@ -34,16 +34,22 @@ clock=pygame.time.Clock()
 fps=30
 
 #player name input
-player_name=""
+player_name="Enter your name"
 base_font=pygame.font.Font(None,32)
 input_active=False
-input_rect= pygame.Rect(200,200,140,32)
+input_rect= pygame.Rect(0,0,140,32)
 color_active=(40,40,150)
-color_passive=(100,100,100)
+color_passive=(120,200,50)
 color=color_passive
 
+# game start button
+start_rect= pygame.Rect(150,150,140,52)
+
+
+
 #player name input 
-while True:
+run=True
+while run:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             pygame.quit()
@@ -54,23 +60,33 @@ while True:
             else:
                 input_active=False
                 color=color_passive
+            if start_rect.collidepoint(pygame.mouse.get_pos()):
+                run=False
         
         if input_active==True:
+            if player_name=="Enter your name":
+                player_name=""
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_BACKSPACE:
-                    user_text=user_text[:-1]
+                    player_name=player_name[:-1]
                 else:
-                    user_text+=event.unicode
+                    player_name+=event.unicode
 
-    screen.fill((0,0,0))
+    screen.fill((100,100,80))
     
-
+    # player name box display
     pygame.draw.rect(screen,color,input_rect,4)
-    text_surface = base_font.render(player_name,True,(255,255,255))
-    screen.blit(text_surface,(input_rect.x+5,input_rect.y+5))
-    input_rect.w = max(text_surface.get_width()+10,140)
+    name_surface = base_font.render(player_name,True,(255,255,255))
+    screen.blit(name_surface,(input_rect.x+5,input_rect.y+5))
+    input_rect.w = max(name_surface.get_width()+10,140)
 
-    break
+    #start button display
+    pygame.draw.rect(screen,(150,0,0),start_rect)
+    start_surface = base_font.render("start",True,(255,255,255))
+    screen.blit(start_surface,(start_rect.x+5,start_rect.y+5))
+
+    pygame.display.update()
+    
 
 #actual game
 run=True
@@ -83,9 +99,10 @@ while run:
         if event.type==pygame.MOUSEBUTTONDOWN:
             col=pygame.sprite.spritecollide(mouseobj,tile_group,False)
             for i in col:
-                i.alive=False
-                score+=1
-                print(score)
+                if i.alive==True:
+                    score+=1
+                    i.alive=False
+                    print(score)
     
     #another way of checking collision
     #tile_group.update(speed)
@@ -102,7 +119,7 @@ while run:
     
     
        
-    # mouse and tile collision and game end on tile reaching bottom
+    # new tile creation and game end on tile reaching bottom
     tile_group.update(speed)
     if len(tile_group)>0:
         # when there are other tiles
@@ -130,7 +147,7 @@ while run:
         speed+=1
 
 
-    
+
     scrolling+=speed
     mouseobj.update()
     pygame.display.update()
