@@ -23,7 +23,7 @@ while True:
             else:
                 active=False
                 color=color_passive
-        \
+        
         if active==True:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_BACKSPACE:
