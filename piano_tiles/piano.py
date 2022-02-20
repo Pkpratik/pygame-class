@@ -147,10 +147,15 @@ while run:
         speed+=1
 
 
+    # score bar
+    score_surface = base_font.render("score - "+str(score),True,(0,0,0))
+    screen.blit(score_surface,((width-len(("score - "+str(score)))*10)//2,35))
+
 
     scrolling+=speed
     mouseobj.update()
     pygame.display.update()
     clock.tick(fps)
+pygame.time.wait(4000)
 pygame.quit()
 
