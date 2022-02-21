@@ -34,11 +34,18 @@ class ball(pygame.sprite.Sprite):
         # uncomment the bellow if statement for game over 
             if self.rect.bottom>=h:
                 self.play=0
-            if self.rect.right>=w or self.rect.left<=0:
-                self.forward_speed=-self.forward_speed
+            if self.rect.right>=w:
+                if self.forward_speed>0:
+                    self.forward_speed=-self.forward_speed
+                    
+            if self.rect.left<=0:
+                if self.forward_speed<0:
+                    self.forward_speed=-self.forward_speed
             if self.rect.top<=0 or self.rect.bottom>=h:
                 self.downward_speed=-self.downward_speed
             if self.rect.colliderect(bar1):
+                
+
                 if self.rect.centerx>= bar1.x and self.rect.centerx<= bar1.x+bar1.width//3:
                     if self.forward_speed>0:
                         self.forward_speed*=-1
