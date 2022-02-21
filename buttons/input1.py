@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 screen = pygame.display.set_mode([600,600])
-rect1=pygame.Rect(200,200,140,32)
+rect1=pygame.Rect(300-50,200,140,32)
 base_font=pygame.font.Font(None,32)
 text=""
 
@@ -26,10 +26,10 @@ while active:
 
 
     surface=base_font.render(text,True,(0,200,0))
-    rect1.w = max(100,surface.get_width()+15)
-    screen.blit(surface,(rect1.x+7,rect1.y+5))
+    rect1.w = max(100,surface.get_width()//2)
+    screen.blit(surface,(300-surface.get_width()//2,rect1.y))
 
-
+    rect1.x=300-rect1.w//2
 
     pygame.display.update()
 pygame.quit()
