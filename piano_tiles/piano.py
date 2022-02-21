@@ -37,13 +37,13 @@ fps=30
 player_name="Enter your name"
 base_font=pygame.font.Font(None,32)
 input_active=False
-input_rect= pygame.Rect(0,0,140,32)
+input_rect= pygame.Rect(70,170,140,32)
 color_active=(40,40,150)
 color_passive=(120,200,50)
 color=color_passive
 
 # game start button
-start_rect= pygame.Rect(150,150,140,52)
+start_rect= pygame.Rect(75,220,140,52)
 
 
 
@@ -79,11 +79,13 @@ while run:
     name_surface = base_font.render(player_name,True,(255,255,255))
     screen.blit(name_surface,(input_rect.x+5,input_rect.y+5))
     input_rect.w = max(name_surface.get_width()+10,140)
+    input_rect.x=width//2-input_rect.w//2
+
 
     #start button display
-    pygame.draw.rect(screen,(150,0,0),start_rect)
-    start_surface = base_font.render("start",True,(255,255,255))
-    screen.blit(start_surface,(start_rect.x+5,start_rect.y+5))
+    pygame.draw.rect(screen,(100,150,100),start_rect)
+    start_surface = base_font.render("START",True,(255,255,255))
+    screen.blit(start_surface,(start_rect.x+33,start_rect.y+15))
 
     pygame.display.update()
     
