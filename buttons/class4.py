@@ -16,6 +16,8 @@ l6=pygame.draw.rect(screen,(110,0,0),l5,2)
 rect1=pygame.Rect(100,100,150,100)
 forward_speed=5
 
+
+
 downward_speed=5
 
 while run:

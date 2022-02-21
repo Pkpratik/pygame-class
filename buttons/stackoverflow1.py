@@ -1,57 +1,88 @@
-import pygame
-from sys import exit
-from random import randint
-
+import pygame, random
 pygame.init()
-
-clock = pygame.time.Clock()
-
-screen_width = 1000
-screen_height = 660
-screen = pygame.display.set_mode((screen_width, screen_height))
-
-# Treasure
-treasure = pygame.Surface([10,10])
-treasure_surf = pygame.transform.scale(treasure, (10, 10))
-treasure_surf.fill((100,200,150))
-treasure_rect = treasure_surf.get_rect(center = (500, 330))
-
-# Zombie
-zombie_vel = 1
-zombie = pygame.Surface([100,100])
-zombie_surf = pygame.transform.scale(zombie, (100, 100))
-zombie_surf.fill((200,100,150))
-zombie_rect = zombie_surf.get_rect(center = (randint(0, 1000), randint(0, 600)))
-
-while True:
-
-    for event in pygame.event.get():
-
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-
-    if zombie_rect.centerx < 500:
-        zombie_rect.centerx += zombie_vel
-
-    if zombie_rect.centerx > 500:
-        zombie_rect.centerx -= zombie_vel
-
-    if zombie_rect.centery < 330:
-        zombie_rect.centery += zombie_vel
-
-    if zombie_rect.centery > 330:
-        zombie_rect.centery -= zombie_vel
-
-    if zombie_rect.colliderect(treasure_rect):
-        zombie_rect.centerx = randint(0, 1000)
-        zombie_rect.centery = randint(0, 600)
+pygame.display.set_caption("Piano Hit")
+#Important Data
+w=288
+h=600
+white=(255,255,255)
+gray=(128,128,128)
+black=(0,0,0)
+bg=(white)
+screen=pygame.display.set_mode((w,h))
+run=True
+base_font=pygame.font.Font(None,32)
+speed=2
+scrolling=0
+num_tiles=0
+tile_height=120
+fps=30
+clock=pygame.time.Clock()
+class Tiles(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        super().__init__()
+        self.image=pygame.Surface([(w//4),tile_height])
+        self.image.fill(black)
+        self.rect=self.image.get_rect()
+        self.rect.x=x*(w//4)
+        self.rect.y=y
+        self.alive=True
+    def update(self,speed):
+        self.rect.y+=speed
+        if self.alive==True:
+            pygame.draw.rect(screen,black,self.rect)
+        else:
+            pygame.draw.rect(screen,gray,self.rect)
+        if self.rect.top>=h:
+            self.kill()
+            print("killed")
 
 
-    screen.fill('DarkGreen')
-    screen.blit(treasure_surf, treasure_rect)
-    screen.blit(zombie_surf, zombie_rect)
+class mouse(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image=pygame.Surface([5,5])
+        self.image.fill(black)
+        self.rect=self.image.get_rect()
+        self.rect.center=pygame.mouse.get_pos()
+        self.score=0
+    def update(self):
+        #pygame.draw.rect(screen,black,self.rect)
+        self.rect.center=pygame.mouse.get_pos()
+        #print(self.rect.center)
+    def clicked(self):
+        click=pygame.sprite.spritecollide(mkiller,tiles,False)
+        for i in click:
+            i.alive=False
+            self.score+=1
+            print(self.score)
+        
         
 
+mkiller=mouse()
+tiles=pygame.sprite.Group()
+
+
+while run:
+    clock.tick(fps)
+    screen.fill(bg)
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            run=False
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            mkiller.clicked()
+    if scrolling>=(num_tiles*tile_height):
+        tiles.add(Tiles(random.randint(0,3),-tile_height))
+        num_tiles+=1
+    scrolling+=speed
+    if scrolling%350==0:
+        speed+=1
+    if tiles.sprites()[0].rect.bottom>=h:
+        if tiles.sprites()[0].alive==True:
+            pygame.time.wait(4000)
+            pygame.quit()
+    score_surface = base_font.render("score - ",True,(0,0,0))
+    screen.blit(score_surface,((w-len(("score - "))*10)//2,35))
+    mkiller.update()
+    tiles.update(speed)
     pygame.display.update()
-    clock.tick(60)
+pygame.quit()
