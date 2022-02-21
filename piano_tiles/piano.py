@@ -161,4 +161,3 @@ while run:
 pygame.time.wait(4000)
 pygame.quit()
 
-#random change. - JOnah Jimmink
