@@ -12,13 +12,15 @@ screen = pygame.display.set_mode((width,height))
 tile_width = width//4
 tile_height = 130
 
-white=(255,255,255)
+#game progress trachers
 scrolling=0
 num_tile=1
 score=0
 
 #mouse sprite
 mouseobj=mousep()
+
+
 
 # 1st tile sprite creation  
 tile_group=pygame.sprite.Group()
@@ -41,6 +43,7 @@ input_rect= pygame.Rect(70,170,140,32)
 color_active=(40,40,150)
 color_passive=(120,200,50)
 color=color_passive
+white=(255,255,255)
 
 # game start button
 start_rect= pygame.Rect(75,220,140,52)
@@ -158,6 +161,20 @@ while run:
     mouseobj.update()
     pygame.display.update()
     clock.tick(fps)
-pygame.time.wait(4000)
+pygame.time.wait(3000)
+hsdict={}
+
+with open("piano_tiles/score.txt","r+") as file:
+    for line in file:
+        hsname,hsscore=line.split()
+        hsdict[hsname]=hsscore
+
+hsdict.setdefault(player_name,score)
+hsdict[player_name]=max(int(hsdict[player_name]),score)
+
+
+with open("piano_tiles/score.txt","w") as file:
+    for i in hsdict.items():
+        file.write(i[0]+" "+str(i[1])+"\n")
 pygame.quit()
 
