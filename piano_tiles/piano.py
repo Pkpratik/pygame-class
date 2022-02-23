@@ -29,7 +29,7 @@ t=Tile(x*tile_width,-tile_height,screen)
 tile_group.add(t)
 
 #tile speed
-speed=2
+speed=6
 
 #game clock speed
 clock=pygame.time.Clock()
@@ -161,12 +161,15 @@ while run:
     mouseobj.update()
     pygame.display.update()
     clock.tick(fps)
-pygame.time.wait(3000)
+pygame.time.wait(1000)
 hsdict={}
 
 with open("piano_tiles/score.txt","r+") as file:
     for line in file:
-        hsname,hsscore=line.split()
+        print(line.rindex(" "))
+        print(line[:line.rindex(" ")],"a")
+        line[line.rindex(" "):]
+        hsname,hsscore=line[:line.rindex(" ")],int(line[line.rindex(" ")+1:])
         hsdict[hsname]=hsscore
 
 hsdict.setdefault(player_name,score)
@@ -174,7 +177,12 @@ hsdict[player_name]=max(int(hsdict[player_name]),score)
 
 
 with open("piano_tiles/score.txt","w") as file:
-    for i in hsdict.items():
-        file.write(i[0]+" "+str(i[1])+"\n")
+    lim=10
+    for i in sorted(hsdict.items(),key= lambda item:item[1],reverse=True):
+        
+        file.write(i[0]+" "+str(i[1])+'\n')
+        lim-=1
+        if lim==0:
+            break
 pygame.quit()
 
