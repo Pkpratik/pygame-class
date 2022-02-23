@@ -1,6 +1,6 @@
 import pygame
 
-width = 288 
+width = 300
 height = 512
 
 tile_width = width//4
