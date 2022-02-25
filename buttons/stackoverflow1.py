@@ -60,7 +60,9 @@ class mouse(pygame.sprite.Sprite):
 
 mkiller=mouse()
 tiles=pygame.sprite.Group()
-
+result = "Created by Rishi"
+def myFun ():
+    print("Rishi")
 
 while run:
     clock.tick(fps)
@@ -86,3 +88,4 @@ while run:
     tiles.update(speed)
     pygame.display.update()
 pygame.quit()
+print("END:")
