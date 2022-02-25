@@ -60,6 +60,9 @@ class mouse(pygame.sprite.Sprite):
 
 mkiller=mouse()
 tiles=pygame.sprite.Group()
+result = "Created by Rishi"
+def myFun ():
+    print("Rishi")
 
 alpha = "aplha "
 beta = "beta"
