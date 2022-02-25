@@ -61,7 +61,8 @@ class mouse(pygame.sprite.Sprite):
 mkiller=mouse()
 tiles=pygame.sprite.Group()
 
-
+alpha = "aplha "
+beta = "beta"
 while run:
     clock.tick(fps)
     screen.fill(bg)
