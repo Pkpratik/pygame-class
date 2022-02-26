@@ -30,7 +30,7 @@ t=Tile(x*tile_width,-tile_height,screen)
 tile_group.add(t)
 
 #tile speed
-speed=6
+speed=2
 
 #game clock speed
 clock=pygame.time.Clock()

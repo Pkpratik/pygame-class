@@ -1,7 +1,7 @@
+Enter your name 70
 as d 39
 pratik pratik pratik 32
 a b c d 31
-Enter your name 29
 pratikagrawal 26
 abcd 17
 a 8
