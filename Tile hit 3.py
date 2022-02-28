@@ -112,9 +112,10 @@ while run:
     #Tile creation
     if len(tiles)>0:
         t=tiles.sprites()[-1]
+        print(t.rect.top,t)
         y=-tile_height+t.rect.top
         if t.rect.top+speed>=0:
-            tiles.add(Tiles(random.randint(0,3),-y))
+            tiles.add(Tiles(random.randint(0,3),y))
     else:
         t=tiles.sprites()[-1]
         y=-tile_height+t.rect.top
