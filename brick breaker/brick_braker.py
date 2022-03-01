@@ -45,10 +45,13 @@ class ball(pygame.sprite.Sprite):
                 self.downward_speed=-self.downward_speed
             if self.rect.colliderect(bar1):
                 
-
+                # if self.rect.centerx>= bar1.x+bar1.width*(1//3) and self.rect.centerx<= bar1.x+bar1.width*2//3:
+                #     self.forward_speed*=-1
+                # left side bar hit 
                 if self.rect.centerx>= bar1.x and self.rect.centerx<= bar1.x+bar1.width//3:
                     if self.forward_speed>0:
                         self.forward_speed*=-1
+                #right side bar hit
                 elif self.rect.centerx>=bar1.x+bar1.width*(2//3) and self.rect.centerx<=bar1.x+bar1.width:
                     if self.forward_speed<0:
                         self.forward_speed*=-1
@@ -64,6 +67,9 @@ class ball(pygame.sprite.Sprite):
         self.start=1
     def hit(self):
         self.downward_speed*=-1
+    def side_hit(self):
+        self.forward_speed*=-1
+    
 
 class brick(pygame.sprite.Sprite):
     def __init__(self,x,y,s,color):
@@ -87,17 +93,19 @@ class brick(pygame.sprite.Sprite):
 ball=ball()
 arr=pygame.sprite.Group()
 brickcolor=(100,100,25)
-arr.add(brick(20,100,2,brickcolor))
-arr.add(brick(130,100,2,brickcolor))
-arr.add(brick(240,100,2,brickcolor))
-arr.add(brick(350,100,2,brickcolor))
-arr.add(brick(460,100,2,brickcolor))
-arr.add(brick(20,130,2,brickcolor))
-arr.add(brick(130,130,2,brickcolor))
-#arr.add(brick(240,130,2,brickcolor))
-arr.add(brick(350,130,2,brickcolor))
+# arr.add(brick(20,100,2,brickcolor))
+# arr.add(brick(130,100,2,brickcolor))
+# arr.add(brick(240,100,2,brickcolor))
+# arr.add(brick(350,100,2,brickcolor))
+# arr.add(brick(460,100,2,brickcolor))
+# arr.add(brick(20,130,2,brickcolor))
+# arr.add(brick(130,130,2,brickcolor))
+# #arr.add(brick(240,130,2,brickcolor))
+# arr.add(brick(350,130,2,brickcolor))
 arr.add(brick(460,130,2,brickcolor))
 arr.add(brick(240,130,1000000,(100,100,100)))
+arr.add(brick(240,230,1000000,(100,100,100)))
+arr.add(brick(240,330,1000000,(100,100,100)))
 
 play=True
 
@@ -130,7 +138,17 @@ while run:
     for i in temp:
         i.hit()
     if len(temp)>0:
-        ball.hit()
+        # ball hits left side of brick
+
+
+
+        if ball.rect.right<=temp[0].rect.left+3:
+            ball.side_hit()
+        # ball hits right side of brick
+        elif ball.rect.left>=temp[0].rect.right-3:
+            ball.side_hit()
+        else:
+            ball.hit()
         
     key=pygame.key.get_pressed()
     if key[pygame.K_RIGHT]==1 and bar1.right<w:
