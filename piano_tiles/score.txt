@@ -1,3 +1,4 @@
+pratik 103
 Enter your name 70
 as d 39
 pratik pratik pratik 32
@@ -7,4 +8,3 @@ abcd 17
 a 8
 hulk 8
 space z 5
-beta h 4
