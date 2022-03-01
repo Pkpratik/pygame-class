@@ -21,7 +21,10 @@ score=0
 #mouse sprite
 mouseobj=mousep()
 
-
+#sound
+pygame.mixer.init()
+tile_hit_sound=pygame.mixer.Sound("piano_tiles/sound1.wav")
+levelup_sound=pygame.mixer.Sound("piano_tiles/sound3_bonus.wav")
 
 # 1st tile sprite creation  
 tile_group=pygame.sprite.Group()
@@ -186,7 +189,10 @@ while run:
             col=pygame.sprite.spritecollide(mouseobj,tile_group,False)
             for i in col:
                 if i.alive==True:
+                    tile_hit_sound.play()
                     score+=1
+                    if score%15==0:
+                        levelup_sound.play()
                     i.alive=False
                     print(score)
     
