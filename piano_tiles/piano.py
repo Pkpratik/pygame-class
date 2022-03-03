@@ -262,12 +262,10 @@ hsdict[player_name]=max(int(hsdict[player_name]),score)
 
 
 with open("piano_tiles/score.txt","w") as file:
-    lim=10
+    
     for i in sorted(hsdict.items(),key= lambda item:item[1],reverse=True):
         
         file.write(i[0]+" "+str(i[1])+'\n')
-        lim-=1
-        if lim==0:
-            break
+        
 pygame.quit()
 

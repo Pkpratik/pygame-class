@@ -139,9 +139,6 @@ while run:
         i.hit()
     if len(temp)>0:
         # ball hits left side of brick
-
-
-
         if ball.rect.right<=temp[0].rect.left+3:
             ball.side_hit()
         # ball hits right side of brick

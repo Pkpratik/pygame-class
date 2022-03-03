@@ -1,10 +1,13 @@
 pratik 103
 Enter your name 70
 as d 39
+dtbrt 33
 pratik pratik pratik 32
 a b c d 31
 pratikagrawal 26
 abcd 17
 a 8
 hulk 8
+a2 7
+a1 6
 space z 5
