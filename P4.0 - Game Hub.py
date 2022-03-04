@@ -372,16 +372,12 @@ def brickbreaker():
         for i in temp:
             i.hit()
         if len(temp)>0:
-            print("4")
-            if ball1.rect.right>=temp[0].rect.left+3:
+            if ball1.rect.right<=temp[0].rect.left+3:
                 ball1.sidehit()
-                print("1")
-            elif ball1.rect.lef>=temp[0].rect.right-3:
+            elif ball1.rect.left>=temp[0].rect.right-3:
                 ball1.sidehit()
-                print("2")
             else:
                 ball1.hit()
-                print("3")
         
         key=pygame.key.get_pressed()
         
@@ -412,7 +408,7 @@ th_button=pygame.draw.rect(screen,(0,0,0),(72,150,200,100))
 bb_button=pygame.draw.rect(screen,(255,255,255),(322,150,200,100))
 
 #images
-th_img=pygame.image.load('tilehit.png')
+th_img=pygame.image.load('buttons\icon2.png')
 #otherone
 
 #Actual game
