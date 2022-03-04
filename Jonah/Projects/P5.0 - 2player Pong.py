@@ -19,7 +19,7 @@ downward_speed=1
 barspeed=8
 
 #sounds
-barhit=pygame.mixer.Sound('Jonah/Projects/2pp_barsound.wav')
+barhit=pygame.mixer.Sound('Projects/2pp_barsound.wav')
 
 #Bar1 (Up)
 line1=pygame.draw.line(screen,white,(250,500),(350,500),2)
@@ -41,56 +41,46 @@ class ball(pygame.sprite.Sprite):
         
         self.forward_speed=2
         self.downward_speed=2
-        self.setup=False
-        self.setdown=False
+        
         self.space_pressed=False
     def update(self):
         pygame.draw.rect(screen,white,self.rect,0,25)
         #(GOING TO BE UPDATED) Whichever has the ball, should be able to press space to let the ball loose
-        print(self.setdown,self.setup)
-        if self.setdown==False and self.setup==False:
-            if self.space_pressed==False:
-                self.rect.center=(300,300)
-            else:
-                self.rect.x+=self.forward_speed
-                self.rect.y-=self.downward_speed
-                # if self.rect.bottom>=h or self.rect.top<=0:
-                #     self.downward_speed=-self.downward_speed
-                if self.rect.left<=0 or self.rect.right>=w:
-                    self.forward_speed=-self.forward_speed
-                #Bar1
-                if self.rect.colliderect(bar1):
-                    pygame.mixer.Sound.play(barhit)
-                    if self.downward_speed<0:
-                        self.downward_speed=-self.downward_speed
-                #Bar2
-                if self.rect.colliderect(bar2):
-                    pygame.mixer.Sound.play(barhit)
-                    if self.downward_speed>0:
-                        self.downward_speed=-self.downward_speed
+        if self.space_pressed==False:
+            self.rect.center=(300,300)
         else:
-            print("hhhhhhh")
-            if self.setdown==True:
-                self.rect.centerx=bar2.centerx
-                self.rect.top=bar2.centery+1
-            if self.setup==True:
-                self.rect.centerx=bar1.centerx
-                self.rect.bottom=bar1.centery-1
-
-    # def turnup(self):
-    #     if self.space_pressed==False:
-    #         self.rect.centerx=bar1.centerx
-    #         self.rect.bottom=bar1.centery
-    #     else:
-    #         self.rect.x+=self.forward_speed
-    #         self.rect.y-=self.downward_speed
-    # def turndown(self):
-    #     if self.space_pressed==False:   
-    #         self.rect.centerx=bar2.centerx
-    #         self.rect.bottom=bar2.centery
-    #     else:
-    #         self.rect.x-=self.forward_speed
-    #         self.rect.y+=self.downward_speed
+            self.rect.x+=self.forward_speed
+            self.rect.y-=self.downward_speed
+            if self.rect.bottom>=h or self.rect.top<=0:
+                self.downward_speed=-self.downward_speed
+            if self.rect.left<=0 or self.rect.right>=h:
+                self.forward_speed=-self.forward_speed
+            #Bar1
+            if self.rect.colliderect(bar1):
+                pygame.mixer.Sound.play(barhit)
+                self.forward_speed=-self.forward_speed
+                self.forward_speed=-self.forward_speed
+                self.downward_speed=-self.downward_speed
+            #Bar2
+            if self.rect.colliderect(bar2):
+                pygame.mixer.Sound.play(barhit)
+                self.forward_speed=-self.forward_speed
+                self.forward_speed=-self.forward_speed
+                self.downward_speed=-self.downward_speed
+    def turnup(self):
+        if self.space_pressed==False:
+            self.rect.centerx=bar1.centerx
+            self.rect.bottom=bar1.centery
+        else:
+            self.rect.x+=self.forward_speed
+            self.rect.y-=self.downward_speed
+    def turndown(self):
+        if self.space_pressed==False:   
+            self.rect.centerx=bar2.centerx
+            self.rect.bottom=bar2.centery
+        else:
+            self.rect.x-=self.forward_speed
+            self.rect.y+=self.downward_speed
     
 ball1=ball()
 
@@ -113,9 +103,6 @@ while run:
         bar1=pygame.Rect.move(bar1,-barspeed,0)
     if key[pygame.K_SPACE]==1:
         ball1.space_pressed=True
-        ball1.setdown=False
-        ball1.setup=False
-        
 
     #Pongbar2
     if key[pygame.K_d]==1 and bar2.right<=w:
@@ -125,10 +112,10 @@ while run:
 
     if ball1.rect.bottom>=h:
         scoreup+=1
-        ball1.setup=True
+        ball1.turnup()
     if ball1.rect.top<=0:
         scoredown+=1
-        ball1.setdown=True
+        ball1.turndown()
 
 
 
