@@ -19,7 +19,7 @@ downward_speed=1
 barspeed=8
 
 #sounds
-barhit=pygame.mixer.Sound('Projects/2pp_barsound.wav')
+barhit=pygame.mixer.Sound('Jonah/Projects/2pp_barsound.wav')
 
 #Bar1 (Up)
 line1=pygame.draw.line(screen,white,(250,500),(350,500),2)
@@ -135,6 +135,9 @@ while run:
         bar1=pygame.Rect.move(bar1,-barspeed,0)
     if key[pygame.K_SPACE]==1:
         ball1.space_pressed=True
+        ball1.setdown=False
+        ball1.setup=False
+        
 
     #Pongbar2
     if key[pygame.K_d]==1 and bar2.right<=w:
@@ -144,10 +147,10 @@ while run:
 
     if ball1.rect.bottom>=h:
         scoreup+=1
-        ball1.turnup()
+        ball1.setup=True
     if ball1.rect.top<=0:
         scoredown+=1
-        ball1.turndown()
+        ball1.setdown=True
 
 
 
