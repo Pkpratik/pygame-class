@@ -31,6 +31,10 @@ line2=pygame.draw.line(screen,white,(250,100),(350,100),2)
 bar2=pygame.draw.rect(screen,white,line2,2)
 scoredown=0
 
+#
+
+
+
 class ball(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -38,16 +42,16 @@ class ball(pygame.sprite.Sprite):
         self.image.fill((3,255,74))
         #Bar1
         self.rect=self.image.get_rect()
-        
+        self.anything=0
         self.forward_speed=2
         self.downward_speed=2
+        self.cooldown=0
         self.setup=False
         self.setdown=False
         self.space_pressed=False
     def update(self):
         pygame.draw.rect(screen,white,self.rect,0,25)
         #(GOING TO BE UPDATED) Whichever has the ball, should be able to press space to let the ball loose
-        print(self.setdown,self.setup)
         if self.setdown==False and self.setup==False:
             if self.space_pressed==False:
                 self.rect.center=(300,300)
@@ -59,24 +63,42 @@ class ball(pygame.sprite.Sprite):
                 if self.rect.left<=0 or self.rect.right>=w:
                     self.forward_speed=-self.forward_speed
                 #Bar1
+                if self.cooldown>0:
+                    self.cooldown-=1
                 if self.rect.colliderect(bar1):
+                    if self.cooldown==0:
+                        self.anything+=1
+                        self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
                     if self.downward_speed<0:
                         self.downward_speed=-self.downward_speed
                 #Bar2
                 if self.rect.colliderect(bar2):
+                    if self.cooldown==0:
+                        self.anything+=1
+                        self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
                     if self.downward_speed>0:
                         self.downward_speed=-self.downward_speed
         else:
-            print("hhhhhhh")
             if self.setdown==True:
                 self.rect.centerx=bar2.centerx
                 self.rect.top=bar2.centery+1
             if self.setup==True:
                 self.rect.centerx=bar1.centerx
                 self.rect.bottom=bar1.centery-1
-
+        print(self.anything,self.anything+1%6)
+        if (self.anything+1)%6==0:
+            self.anything=0
+            if self.forward_speed>0:
+                self.forward_speed+=1
+            else:
+                self.forward_speed-=1
+            if self.downward_speed>0:
+                self.downward_speed+=1
+            else:
+                self.downward_speed-=1
+            print(self.forward_speed,self.downward_speed)
     # def turnup(self):
     #     if self.space_pressed==False:
     #         self.rect.centerx=bar1.centerx
