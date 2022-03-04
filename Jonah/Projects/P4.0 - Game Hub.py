@@ -1,4 +1,3 @@
-
 import pygame, random
 pygame.init()
 pygame.mixer.init()
@@ -247,23 +246,6 @@ def tilehit():
                 screen_width=600
                 screen=pygame.display.set_mode((screen_width,screen_height))
                 run=False
-        hsdict={}
-
-        with open("Jonah/Projects/myscore.txt","r+") as file:
-            for line in file:
-                line[line.rindex(" "):]
-                hsname,hsscore=line[:line.rindex(" ")],line[line.rindex(" ")+1:]
-                hsdict[hsname]=hsscore
-
-        hsdict.setdefault(player_name,clicker.score)
-        hsdict[player_name]=max(int(hsdict[player_name]),clicker.score)
-
-        with open("Jonah/Projects/myscore.txt","w") as file:
-            
-            for i in sorted(hsdict.items(),key=lambda item:item[1],reverse=True):    
-            
-                file.write(i[0]+" "+str(i[1])+'\n')
-        
         tiles.update(speed)
         someothervariable1=base_font.render("Score - "+str(clicker.score),True,(255,0,0))
         screen.blit(someothervariable1,(screen_width//3,40))
@@ -271,6 +253,23 @@ def tilehit():
         
         #Standard while-loop End
         pygame.display.update()
+    hsdict={}
+
+    with open("Jonah/Projects/myscore.txt","r+") as file:
+        for line in file:
+            line[line.rindex(" "):]
+            hsname,hsscore=line[:line.rindex(" ")],line[line.rindex(" ")+1:-1]
+            hsdict[hsname]=int(hsscore)
+
+    hsdict.setdefault(player_name,clicker.score)
+    hsdict[player_name]=max(int(hsdict[player_name]),clicker.score)
+
+    with open("Jonah/Projects/myscore.txt","w") as file:
+        print(hsdict)
+        for i in sorted(hsdict.items(),key=lambda item:item[1],reverse=True):    
+        
+            file.write(i[0]+" "+str(i[1])+'\n')
+    
 
 #Brick Breaker
 def brickbreaker():
