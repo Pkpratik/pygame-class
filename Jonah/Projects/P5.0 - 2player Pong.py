@@ -12,6 +12,7 @@ bg = (black)
 screen=pygame.display.set_mode((w,h))
 pygame.display.set_caption('Brick Breaker')
 base_font=pygame.font.Font(None,40)
+other_font=pygame.font.Font(None,32)
 
 #dif. speeds
 forward_speed=1
@@ -21,19 +22,17 @@ barspeed=8
 #sounds
 barhit=pygame.mixer.Sound('Jonah/Projects/2pp_barsound.wav')
 
+#Scores
+scoreup=0
+scoredown=0
+
 #Bar1 (Up)
 line1=pygame.draw.line(screen,white,(250,500),(350,500),2)
 bar1=pygame.draw.rect(screen,white,line1,2)
-scoreup=0
 
 #Bar (Down)
 line2=pygame.draw.line(screen,white,(250,100),(350,100),2)
 bar2=pygame.draw.rect(screen,white,line2,2)
-scoredown=0
-
-#
-
-
 
 class ball(pygame.sprite.Sprite):
     def __init__(self):
@@ -43,6 +42,8 @@ class ball(pygame.sprite.Sprite):
         #Bar1
         self.rect=self.image.get_rect()
         self.anything=0
+        self.teamscore=0
+        self.ths=0
         self.forward_speed=2
         self.downward_speed=2
         self.cooldown=0
@@ -68,6 +69,7 @@ class ball(pygame.sprite.Sprite):
                 if self.rect.colliderect(bar1):
                     if self.cooldown==0:
                         self.anything+=1
+                        self.teamscore+=1
                         self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
                     if self.downward_speed<0:
@@ -76,6 +78,7 @@ class ball(pygame.sprite.Sprite):
                 if self.rect.colliderect(bar2):
                     if self.cooldown==0:
                         self.anything+=1
+                        self.teamscore+=1
                         self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
                     if self.downward_speed>0:
@@ -87,7 +90,8 @@ class ball(pygame.sprite.Sprite):
             if self.setup==True:
                 self.rect.centerx=bar1.centerx
                 self.rect.bottom=bar1.centery-1
-        print(self.anything,self.anything+1%6)
+        
+        #Speed incrementation
         if (self.anything+1)%6==0:
             self.anything=0
             if self.forward_speed>0:
@@ -99,20 +103,6 @@ class ball(pygame.sprite.Sprite):
             else:
                 self.downward_speed-=1
             print(self.forward_speed,self.downward_speed)
-    # def turnup(self):
-    #     if self.space_pressed==False:
-    #         self.rect.centerx=bar1.centerx
-    #         self.rect.bottom=bar1.centery
-    #     else:
-    #         self.rect.x+=self.forward_speed
-    #         self.rect.y-=self.downward_speed
-    # def turndown(self):
-    #     if self.space_pressed==False:   
-    #         self.rect.centerx=bar2.centerx
-    #         self.rect.bottom=bar2.centery
-    #     else:
-    #         self.rect.x-=self.forward_speed
-    #         self.rect.y+=self.downward_speed
     
 ball1=ball()
 
@@ -134,9 +124,12 @@ while run:
     if key[pygame.K_LEFT]==1 and bar1.left>=0:
         bar1=pygame.Rect.move(bar1,-barspeed,0)
     if key[pygame.K_SPACE]==1:
+        if ball1.setdown==True or ball1.setup==True:
+            ball1.teamscore=-1
         ball1.space_pressed=True
         ball1.setdown=False
         ball1.setup=False
+        
         
 
     #Pongbar2
@@ -148,26 +141,25 @@ while run:
     if ball1.rect.bottom>=h:
         scoreup+=1
         ball1.setup=True
+        if ball1.teamscore>=ball1.ths:
+            ball1.ths=ball1.teamscore
     if ball1.rect.top<=0:
         scoredown+=1
         ball1.setdown=True
+        if ball1.teamscore>=ball1.ths:
+            ball1.ths=ball1.teamscore
 
 
-
-    # Speed incrementation
-    # f+=forward_speed
-    # d+=downward_speed
-    # if f%500==0 or d%500==0:
-    #     ball1.forward_speed+=1
-    #     ball1.downward_speed+=1
-    #     barspeed+=1
-    #     print("increased")
-    
     #Showing scores
     sup=base_font.render(str(scoreup),True,white)
     screen.blit(sup,(25,250))
     sdown=base_font.render(str(scoredown),True,white)
     screen.blit(sdown,(25,350))
+    steam=other_font.render("Teamscore - "+str(ball1.teamscore),True,white)
+    hsteam=other_font.render("Team Highscore - "+str(ball1.ths),True,white)
+    screen.blit(steam,(425,40))
+    screen.blit(hsteam,(371,10))
+
 
     #Overall drawing/displaying
     pygame.draw.rect(screen,white,bar1)
