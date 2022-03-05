@@ -41,7 +41,7 @@ class ball(pygame.sprite.Sprite):
         self.image.fill((3,255,74))
         #Bar1
         self.rect=self.image.get_rect()
-        self.anything=0
+        self.speedincrementation=0
         self.teamscore=0
         self.ths=0
         self.forward_speed=2
@@ -68,7 +68,7 @@ class ball(pygame.sprite.Sprite):
                     self.cooldown-=1
                 if self.rect.colliderect(bar1):
                     if self.cooldown==0:
-                        self.anything+=1
+                        self.speedincrementation+=1
                         self.teamscore+=1
                         self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
@@ -77,7 +77,7 @@ class ball(pygame.sprite.Sprite):
                 #Bar2
                 if self.rect.colliderect(bar2):
                     if self.cooldown==0:
-                        self.anything+=1
+                        self.speedincrementation+=1
                         self.teamscore+=1
                         self.cooldown=5
                     pygame.mixer.Sound.play(barhit)
@@ -92,8 +92,8 @@ class ball(pygame.sprite.Sprite):
                 self.rect.bottom=bar1.centery-1
         
         #Speed incrementation
-        if (self.anything+1)%6==0:
-            self.anything=0
+        if (self.speedincrementation+1)%6==0:
+            self.speedincrementation=0
             if self.forward_speed>0:
                 self.forward_speed+=1
             else:
@@ -126,6 +126,8 @@ while run:
     if key[pygame.K_SPACE]==1:
         if ball1.setdown==True or ball1.setup==True:
             ball1.teamscore=-1
+            ball1.forward_speed=2
+            ball1.downward_speed=2
         ball1.space_pressed=True
         ball1.setdown=False
         ball1.setup=False
