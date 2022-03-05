@@ -120,7 +120,6 @@ class ball(pygame.sprite.Sprite):
                 self.downward_speed+=1
             else:
                 self.downward_speed-=1
-            print(self.forward_speed,self.downward_speed)
     
 ball1=ball()
 
