@@ -44,13 +44,14 @@ def tilehit():
 
     #Leaderboard function
     def lb():
+        #getting data from txt
         hsscore=[]
         hsname=[]
         with open("Jonah/Projects/myscore.txt","r+") as file:
             for line in file:
                 hsscore.append(line[line.rindex(" "):-1])
                 hsname.append(line[:line.rindex(" ")])
-
+        #showing data from array
         run=True
         while run:
             screen=pygame.display.set_mode((500,600))
@@ -253,17 +254,18 @@ def tilehit():
         
         #Standard while-loop End
         pygame.display.update()
-    hsdict={}
 
+    #reading previous hs
+    hsdict={}
     with open("Jonah/Projects/myscore.txt","r+") as file:
         for line in file:
             line[line.rindex(" "):]
             hsname,hsscore=line[:line.rindex(" ")],line[line.rindex(" ")+1:-1]
             hsdict[hsname]=int(hsscore)
-
+    #adding current hs
     hsdict.setdefault(player_name,clicker.score)
     hsdict[player_name]=max(int(hsdict[player_name]),clicker.score)
-
+    #storing all hs
     with open("Jonah/Projects/myscore.txt","w") as file:
         print(hsdict)
         for i in sorted(hsdict.items(),key=lambda item:item[1],reverse=True):    
@@ -447,4 +449,4 @@ while run:
     title=title_font.render("Profielwerkstuk",True,(0,0,0))
     screen.blit(title,(50,50))
     pygame.display.update()
-pygame.quit
+pygame.quit()
