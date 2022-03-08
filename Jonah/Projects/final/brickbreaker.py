@@ -16,7 +16,7 @@ def brickbreaker():
     base_font=pygame.font.Font(None,32)
 
     #Easteregg
-    ee1=pygame.mixer.Sound('Jonah/Projects/easteregg1.wav')
+    ee1=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/easteregg1.wav')
 
     #Bar info
     barspeed=5

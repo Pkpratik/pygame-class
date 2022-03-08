@@ -36,7 +36,7 @@ input_active2=False
 input_color2=deactive_color
 
 #sounds
-barhit=pygame.mixer.Sound('Jonah/Projects/2pp_barsound.wav')
+barhit=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/2pp_barsound.wav')
 
 #Scores
 scoreup=5
