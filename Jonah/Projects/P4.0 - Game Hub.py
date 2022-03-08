@@ -35,7 +35,7 @@ def tilehit():
     tile_sound=pygame.mixer.Sound('Jonah/Projects/piano_tiles_sound1 (1).wav')
     
     #player info
-    player_name="Enter your name"
+    player_name="Voer je naam in"
     input_rect=pygame.Rect(70,80,150,32)
     input_active=False
     deactive_color=(255,0,0)
@@ -180,7 +180,7 @@ def tilehit():
                 if input_rect.collidepoint(event.pos):
                     input_active=True
                     input_color=active_color
-                    if player_name=="Enter your name":
+                    if player_name=="Voer je naam in":
                         player_name=""
                 else:
                     input_color=deactive_color

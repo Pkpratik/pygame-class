@@ -15,16 +15,13 @@ base_font=pygame.font.Font(None,40)
 other_font=pygame.font.Font(None,32)
 starting_font=pygame.font.Font(None,64)
 
-#dif. speeds
-forward_speed=1
-downward_speed=1
 barspeed=8
 
 #Buttons
 starting_button=pygame.Rect(225,200,156,75)
 
 #player1 info
-player_name1="Enter name player1"
+player_name1="Voer naam1 in"
 input_rect1=pygame.Rect(70,55,150,32)
 input_active1=False
 deactive_color=(255,0,0)
@@ -32,7 +29,7 @@ active_color=(0,255,0)
 input_color1=deactive_color
 
 #player2 info
-player_name2="Enter name player2"
+player_name2="Voer naam2 in"
 input_rect2=pygame.Rect(70,130,150,32)
 input_active2=False
 input_color2=deactive_color
@@ -41,8 +38,8 @@ input_color2=deactive_color
 barhit=pygame.mixer.Sound('Jonah/Projects/2pp_barsound.wav')
 
 #Scores
-scoreup=0
-scoredown=0
+scoreup=5
+scoredown=5
 
 #Bar1 (Up)
 line1=pygame.draw.line(screen,white,(250,500),(350,500),2)
@@ -140,7 +137,7 @@ while run:
                 input_active2=False
                 input_active1=True
                 input_color1=active_color
-                if player_name1=="Enter name player1":
+                if player_name1=="Voer naam1 in":
                     player_name1=""
             else:
                 input_color=deactive_color
@@ -148,7 +145,7 @@ while run:
                 input_active1=False
                 input_active2=True
                 input_color2=active_color
-                if player_name2=="Enter name player2":
+                if player_name2=="Voer naam2 in":
                     player_name2=""
             else:
                 input_color=deactive_color
@@ -231,9 +228,18 @@ while run:
         ball1.setdown=True
         if ball1.teamscore>=ball1.ths:
             ball1.ths=ball1.teamscore
-
-
-    #Showing scores
+    
+    if scoreup==7:
+        winnerup=other_font.render(str(player_name1)+" Won!",True,white)
+        screen.blit(winnerup,(150,150))
+        pygame.time.delay(1500)
+        run=False
+    if scoredown==7:
+        winnerdown=other_font.render(str(player_name2)+" Won!",True,white)
+        screen.blit(winnerdown,(150,450))
+        pygame.time.delay(1500)
+        run=False
+    #Showing score
     sup=base_font.render(str(scoreup),True,white)
     screen.blit(sup,(25,250))
     sdown=base_font.render(str(scoredown),True,white)
