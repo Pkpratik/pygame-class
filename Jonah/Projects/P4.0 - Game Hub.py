@@ -35,7 +35,7 @@ def tilehit():
     tile_sound=pygame.mixer.Sound('Jonah/Projects/piano_tiles_sound1 (1).wav')
     
     #player info
-    player_name="Enter your name"
+    player_name="Voer je naam in"
     input_rect=pygame.Rect(70,80,150,32)
     input_active=False
     deactive_color=(255,0,0)
@@ -181,7 +181,7 @@ def tilehit():
                 if input_rect.collidepoint(event.pos):
                     input_active=True
                     input_color=active_color
-                    if player_name=="Enter your name":
+                    if player_name=="Voer je naam in":
                         player_name=""
                 else:
                     input_color=deactive_color
@@ -267,7 +267,6 @@ def tilehit():
     hsdict[player_name]=max(int(hsdict[player_name]),clicker.score)
     #storing all hs
     with open("Jonah/Projects/myscore.txt","w") as file:
-        print(hsdict)
         for i in sorted(hsdict.items(),key=lambda item:item[1],reverse=True):    
         
             file.write(i[0]+" "+str(i[1])+'\n')
@@ -285,7 +284,8 @@ def brickbreaker():
     bg = (black)
     screen=pygame.display.set_mode((w,h))
     pygame.display.set_caption('Brick Breaker')
-    
+    base_font=pygame.font.Font(None,32)
+
     #Easteregg
     ee1=pygame.mixer.Sound('Jonah/Projects/easteregg1.wav')
 
@@ -318,6 +318,7 @@ def brickbreaker():
             self.rect.bottom=bar1.centery
             self.forward_speed=2
             self.downward_speed=3
+            self.lives=3
             
             self.space_pressed=False
         def update(self):
@@ -328,7 +329,10 @@ def brickbreaker():
             else:
                 self.rect.x+=self.forward_speed
                 self.rect.y-=self.downward_speed
-                if self.rect.bottom>=h or self.rect.top<=0:
+                if self.rect.bottom>=h:
+                    self.lives-=1
+                    self.downward_speed=-self.downward_speed
+                if self.rect.top<=0:
                     self.downward_speed=-self.downward_speed
                 if self.rect.left<=0 or self.rect.right>=h:
                     self.forward_speed=-self.forward_speed
@@ -352,7 +356,7 @@ def brickbreaker():
     brick1=bricks(50,50,2)
     arr=pygame.sprite.Group()
     arr.add(brick1)
-    arr.add(bricks(50,50,2))
+    arr.add(bricks(150,50,2))
     arr.add(bricks(250,50,2))
     arr.add(bricks(350,50,2))
     arr.add(bricks(450,50,2))
@@ -373,8 +377,6 @@ def brickbreaker():
                 if ball1.rect.collidepoint(event.pos):
                     pygame.mixer.Sound.play(ee1)
 
-        
-        #Makes it stay inside the screen
         screen.fill(bg)
         ball1.update()
         arr.draw(screen)
@@ -389,7 +391,11 @@ def brickbreaker():
             else:
                 ball1.hit()
         
-        
+        #Lose mechanic
+        if ball1.lives==0:
+            pygame.time.wait(1500)
+            run=False
+    
         
         #Pongbar
         key=pygame.key.get_pressed()
@@ -401,9 +407,10 @@ def brickbreaker():
             ball1.space_pressed=True
         pygame.draw.rect(screen,(white),bar1)
         
+        ldisp=base_font.render("Lives: "+str(ball1.lives),True,(255,255,255))
+        screen.blit(ldisp,(10,10))
         #Ending bar
         pygame.display.update()
-    pygame.quit()
 
 #Frameworking
 pygame.display.set_caption("Profielwerkstuk")
@@ -425,7 +432,8 @@ th_big=pygame.image.load('Jonah/Projects/tilehit.png')
 th_img=pygame.transform.scale(th_big,(200,100))
 bb_big=pygame.image.load('Jonah/Projects/brickbreaker.png')
 bb_img=pygame.transform.scale(bb_big,(200,100))
-#Actual game
+
+#Actual hub
 run=True
 while run:
     #Standard while-loop beginning
