@@ -18,8 +18,12 @@ run=True
 while run:
     screen.fill(bg)
     pos=pygame.mouse.get_pos()
-    pygame.draw.rect(screen,(255,0,0),Rect(75,200,100,100))
-    screen.blit(row,Rect(75,200,100,100))
+    img=Rect(75,200,100,100)
+    #pygame.draw.rect(screen,(255,0,0),Rect(75,200,100,100))
+    screen.blit(row,img)
+
+
+
     # if Rect(75,200,100,100).collidepoint(pos):
     #     pygame.draw.rect(screen,(75,225,255),Rect(75,200,100,100))
     # pygame.draw.line(screen, (0,0,0),(75,300),(175,300),2)
@@ -29,5 +33,9 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run=False
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            
+            if img.collidepoint(pygame.mouse.get_pos()):
+                print("fiwkurh")
     pygame.display.update()
 pygame.quit()

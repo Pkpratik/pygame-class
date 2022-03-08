@@ -1,4 +1,5 @@
 import pygame
+import time
 pygame.init()
 
 #Colors
@@ -182,7 +183,11 @@ while run:
 
 #Gameloop
 run=True
+run2=True
 while run:
+    if run2==False:
+        pygame.time.delay(1500)
+        run=False
     pygame.time.delay(10)
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -232,13 +237,11 @@ while run:
     if scoreup==7:
         winnerup=other_font.render(str(player_name1)+" Won!",True,white)
         screen.blit(winnerup,(150,150))
-        pygame.time.delay(1500)
-        run=False
+        run2=False
     if scoredown==7:
         winnerdown=other_font.render(str(player_name2)+" Won!",True,white)
         screen.blit(winnerdown,(150,450))
-        pygame.time.delay(1500)
-        run=False
+        run2=False
     #Showing score
     sup=base_font.render(str(scoreup),True,white)
     screen.blit(sup,(25,250))
