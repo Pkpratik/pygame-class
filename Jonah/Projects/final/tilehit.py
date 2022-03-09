@@ -23,6 +23,7 @@ def tilehitrun():
     #Fonts
     base_font=pygame.font.Font(None,32)
     starting_font=pygame.font.Font(None,64)
+    title_font=pygame.font.Font(None,95)
     
     #Colors
     white=(255,255,255)
@@ -34,7 +35,7 @@ def tilehitrun():
     scrolling=0
     tile_height=120
     tile_sound=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/piano_tiles_sound1 (1).wav')
-    
+    gg_sound=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/pianolol.wav')
     #player info
     player_name="Voer je naam in"
     input_rect=pygame.Rect(70,80,150,32)
@@ -154,7 +155,11 @@ def tilehitrun():
             click=pygame.sprite.spritecollide(clicker,tiles,False)
             for i in click:
                 if i.alive==True:
-                    pygame.mixer.Sound.play(tile_sound)
+                    if player_name=="goed gedaan":
+                        pygame.mixer.Sound.play(gg_sound)
+                    else:
+                        pygame.mixer.Sound.play(tile_sound)
+                    
                     self.score+=1
                     i.alive=False
             

@@ -124,7 +124,10 @@ def brickbreaker():
         if ball1.lives==0:
             pygame.time.wait(1500)
             run=False
-    
+
+        if arr==0:
+            pygame.time.wait(1500)
+            run=False
         
         #Pongbar
         key=pygame.key.get_pressed()

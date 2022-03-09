@@ -2,6 +2,7 @@ import pygame, random
 from tilehit import tilehitrun
 from brickbreaker import brickbreaker
 from variables import *
+from pong_final import pong
 pygame.init()
 pygame.mixer.init()
 
@@ -20,14 +21,26 @@ while run:
             if th_button.collidepoint(event.pos):
                 tilehitrun()
             if bb_button.collidepoint(event.pos):
-                brickbreaker()
-    
-    #Displaying the buttons
-    pygame.draw.rect(screen,(0,0,0),th_button)#Can these 2 be images of the game?
-    screen.blit(th_img,(72,150))
-    pygame.draw.rect(screen,(0,0,0),bb_button)#And titles above it?
-    screen.blit(bb_img,(322,150))
+                brickbreaker() 
+            if pong_button.collidepoint(event.pos):
+                pong()
 
+        key=pygame.key.get_pressed()
+        if qwerty==True:
+            if key[pygame.K_1]==1 and key[pygame.K_0]==1:
+                display_easteregg2=True
+            if display_easteregg2==True:
+                pygame.mixer.Sound.play(eeg2)
+                pygame.time.wait(3000)
+                qwerty=False
+
+    #Displaying the buttons
+    pygame.draw.rect(screen,(0,0,0),th_button)
+    screen.blit(th_img,(75,150))
+    pygame.draw.rect(screen,(0,0,0),bb_button)
+    screen.blit(bb_img,(325,150))
+    pygame.draw.rect(screen,(0,0,0),pong_button)
+    screen.blit(pong_img,(200,300))
     #Title
     title=title_font.render("Profielwerkstuk",True,(0,0,0))
     screen.blit(title,(50,50))
