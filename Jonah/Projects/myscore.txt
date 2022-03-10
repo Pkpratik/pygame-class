@@ -1,7 +1,7 @@
 Jonah j 51
 Enter your name 40
 hannah 29
-Voer je naam in 22
+Voer je naam in 28
 s10 10
 s9 9
 s8 8
