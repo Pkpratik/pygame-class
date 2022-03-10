@@ -136,6 +136,9 @@ def brickbreaker():
             ball1.space_pressed=True
         pygame.draw.rect(screen,(white),bar1)
         
+        if len(arr)==0:
+            run=False
+
         ldisp=base_font.render("Lives: "+str(ball1.lives),True,(255,255,255))
         screen.blit(ldisp,(10,10))
         #Ending bar
