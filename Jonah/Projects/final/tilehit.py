@@ -23,6 +23,7 @@ def tilehitrun():
     #Fonts
     base_font=pygame.font.Font(None,32)
     starting_font=pygame.font.Font(None,64)
+    title_font=pygame.font.Font(None,95)
     
     #Colors
     white=(255,255,255)
@@ -33,8 +34,8 @@ def tilehitrun():
     speed=6
     scrolling=0
     tile_height=120
-    tile_sound=pygame.mixer.Sound('Jonah/Projects/piano_tiles_sound1 (1).wav')
-    
+    tile_sound=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/piano_tiles_sound1 (1).wav')
+    gg_sound=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/pianolol.wav')
     #player info
     player_name="Voer je naam in"
     input_rect=pygame.Rect(70,80,150,32)
@@ -48,7 +49,7 @@ def tilehitrun():
         #getting data from txt
         hsscore=[]
         hsname=[]
-        with open("Jonah/Projects/myscore.txt","r+") as file:
+        with open("Jonah/Projects/final/scores/myscore.txt","r+") as file:
             for line in file:
                 hsscore.append(line[line.rindex(" "):-1])
                 hsname.append(line[:line.rindex(" ")])
@@ -154,7 +155,11 @@ def tilehitrun():
             click=pygame.sprite.spritecollide(clicker,tiles,False)
             for i in click:
                 if i.alive==True:
-                    pygame.mixer.Sound.play(tile_sound)
+                    if player_name=="goed gedaan":
+                        pygame.mixer.Sound.play(gg_sound)
+                    else:
+                        pygame.mixer.Sound.play(tile_sound)
+                    
                     self.score+=1
                     i.alive=False
             
@@ -258,7 +263,7 @@ def tilehitrun():
 
     #reading previous hs
     hsdict={}
-    with open("Jonah/Projects/myscore.txt","r+") as file:
+    with open("Jonah/Projects/final/scores/myscore.txt","r+") as file:
         for line in file:
             line[line.rindex(" "):]
             hsname,hsscore=line[:line.rindex(" ")],line[line.rindex(" ")+1:-1]
@@ -267,7 +272,7 @@ def tilehitrun():
     hsdict.setdefault(player_name,clicker.score)
     hsdict[player_name]=max(int(hsdict[player_name]),clicker.score)
     #storing all hs
-    with open("Jonah/Projects/myscore.txt","w") as file:
+    with open("Jonah/Projects/final/scores/myscore.txt","w") as file:
         for i in sorted(hsdict.items(),key=lambda item:item[1],reverse=True):    
         
             file.write(i[0]+" "+str(i[1])+'\n')

@@ -13,4 +13,5 @@ sterre 5
 s4 4
 s3 3
 s2 2
+Jonah 2
 s1 1

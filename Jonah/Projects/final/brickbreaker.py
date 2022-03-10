@@ -16,7 +16,7 @@ def brickbreaker():
     base_font=pygame.font.Font(None,32)
 
     #Easteregg
-    ee1=pygame.mixer.Sound('Jonah/Projects/easteregg1.wav')
+    ee1=pygame.mixer.Sound('Jonah/Projects/final/pictures&sounds/easteregg1.wav')
 
     #Bar info
     barspeed=5
@@ -124,7 +124,10 @@ def brickbreaker():
         if ball1.lives==0:
             pygame.time.wait(1500)
             run=False
-    
+
+        if arr==0:
+            pygame.time.wait(1500)
+            run=False
         
         #Pongbar
         key=pygame.key.get_pressed()
