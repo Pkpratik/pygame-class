@@ -99,6 +99,12 @@ def brickbreaker():
     run=True
     while run:
         pygame.time.delay(10)
+        
+        if len(arr)==0:
+            pygame.time.wait(1500)
+            run=False
+        
+        
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 run=False
@@ -125,9 +131,6 @@ def brickbreaker():
             pygame.time.wait(1500)
             run=False
 
-        if arr==0:
-            pygame.time.wait(1500)
-            run=False
         
         #Pongbar
         key=pygame.key.get_pressed()
